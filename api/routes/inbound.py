@@ -82,7 +82,7 @@ def build_mapping_schema() -> dict:
     docs/api/mapping-document-schema.json cannot drift."""
     schema = MappingDocument.model_json_schema()
     schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
-    schema["title"] = "SentryWMS Inbound Mapping Document"
+    schema["title"] = "Sơn Lộc WMS Inbound Mapping Document"
     return schema
 
 

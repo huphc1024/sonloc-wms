@@ -52,7 +52,7 @@ Revisit when:
 Status: Accepted risk (v1.4)
 Severity: High (as flagged by audit)
 
-Sentry WMS is deployed on warehouse LANs where HTTPS certificates are
+Sơn Lộc WMS is deployed on warehouse LANs where HTTPS certificates are
 impractical. Clone-and-run users and LAN-only production deployments both
 require cleartext HTTP. Profile-gated enforcement was attempted in v1.1 and
 reverted in v1.1.1 because it broke real deployments.

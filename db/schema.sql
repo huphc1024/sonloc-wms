@@ -1,5 +1,5 @@
 -- ============================================================
--- SENTRY WMS - PostgreSQL Schema
+-- SƠN LỘC WMS - PostgreSQL Schema
 -- ============================================================
 -- Development: PostgreSQL (local Docker)
 -- Production:  PostgreSQL Cloud or Fabric SQL Database

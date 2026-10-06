@@ -168,13 +168,10 @@ export default function Integrations() {
               values={{
                 path: <span className="mono">api/connectors/</span>, /* i18n-ignore: a path */
                 guide: (
-                  <a
-                    href="https://hightower-systems.github.io/sentry-wms/connectors/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {t('integrations.frameworkGuide')}
-                  </a>
+                  <>
+                    {t('integrations.frameworkGuide')}{' '}
+                    <span className="mono">docs/connectors.md</span>{/* i18n-ignore: a path */}
+                  </>
                 ),
               }}
             />

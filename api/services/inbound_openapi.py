@@ -298,7 +298,7 @@ def build_inbound_openapi() -> Dict[str, Any]:
     return {
         "openapi": "3.1.0",
         "info": {
-            "title": "SentryWMS v1.7.0 Inbound (Pipe B)",
+            "title": "Sơn Lộc WMS v1.7.0 Inbound (Pipe B)",
             "version": "1.7.0",
             "description": (
                 "Inbound write surface for external systems and internal "
