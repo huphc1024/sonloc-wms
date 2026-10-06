@@ -57,8 +57,6 @@ nav:
       - UAT test cases: uat-test-cases.md
   - Test Lab: test-lab.md
   - Production-like Demo Data: prodlike-data.md
-  - Contributing: contributing.md
-  - Changelog: changelog.md
 
 markdown_extensions:
   - tables

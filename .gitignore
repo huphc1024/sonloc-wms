@@ -56,3 +56,12 @@ proxy/certs/*.pem
 # Local .env backups (never commit; see also .env above)
 .env.backup*
 *.env.backup*
+
+# Coverage output
+.coverage
+coverage/
+htmlcov/
+
+# Local emulator logs / agent workspace
+mobile/emulator.*.log
+.claude/
