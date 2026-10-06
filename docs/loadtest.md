@@ -30,7 +30,7 @@ correctness; this runbook covers throughput and tail latency.
      sudo apt-get update && sudo apt-get install k6
    ```
 
-2. **Sentry stack reachable** at `SENTRY_BASE_URL` (default
+2. **Sơn Lộc WMS stack reachable** at `SENTRY_BASE_URL` (default
    `http://localhost:5000`). The stack must have the v1.7 schema
    loaded (mig 047 + mig 048) and a valid mapping doc on disk for
    `SENTRY_SOURCE_SYSTEM`. Boot fails loudly otherwise.

@@ -152,6 +152,6 @@ Investigators can reconstruct the full TO lifecycle from the audit chain without
 
 ## See also
 
-- [ERP Integration](erp-integration.md) -- how source ERPs push canonical-shaped resource updates to Sentry (the inbound side of transfers).
+- [ERP Integration](erp-integration.md) -- how source ERPs push canonical-shaped resource updates to Sơn Lộc WMS (the inbound side of transfers).
 - [API Reference](api-reference.md) -- the REST surface for TO + approval routes.
 - [Audit log](audit-log.md) -- chain integrity + tamper-evidence guarantees.

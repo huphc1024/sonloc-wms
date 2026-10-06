@@ -1,9 +1,11 @@
-# Changelog
+# Changelog — Sơn Lộc WMS
 
 All notable changes to Sơn Lộc WMS will be documented in this file.
+Entries for v1.37.0 and earlier were written while the project was Sentry WMS (upstream, Apache-2.0); see NOTICE.
 
 ## [Unreleased]
 
+- Rebranded to Sơn Lộc WMS; detached from upstream (proprietary modifications, see `NOTICE` and `LICENSE-PROPRIETARY.md`; Android app id is now `com.sonloc.wms`).
 - Added read-only dashboard endpoints `GET /api/admin/dashboard/overview` and `/dashboard/sales` (KPIs, gap-filled daily series, status/zone/channel breakdowns).
 - Added the read-only AI assistant ("Trợ lý AI", admin page `/ai-assistant`, page key `ai-assistant`, `POST /api/admin/ai/ask`): free preset quick questions without an API key, free-text Q&A over nine fixed warehouse-scoped tools when AI is on; see `docs/ai-assistant.md`.
 - Added Google Gemini as a second AI provider (`AI_PROVIDER=gemini`, `GEMINI_API_KEY`, `GEMINI_MODEL`, SDK `google-genai`) for AI suggestions and the assistant; default stays `claude`, rules / quick mode unchanged; see `docs/ai-suggestions.md`.

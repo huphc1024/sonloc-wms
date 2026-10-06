@@ -91,7 +91,7 @@ Mobile: `receive, putaway, map`
 ## Customer (portal)
 
 Persona duy nhất **không phải nhân viên**: khách hàng gửi hàng ở kho, đăng
-nhập cổng riêng tại port 8081 (`sentry-wms/portal`), không bao giờ chạm
+nhập cổng riêng tại port 8081 (`portal/`), không bao giờ chạm
 vào admin panel hay app mobile.
 
 | Khác biệt | Nhân viên | Khách hàng |

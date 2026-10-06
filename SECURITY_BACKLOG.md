@@ -62,7 +62,7 @@ cleartext to RFC1918 ranges) is the most likely future mitigation if this
 needs to change.
 
 Revisit when:
-- A hosted/cloud deployment option ships (Sentry Cloud SaaS)
+- A hosted/cloud deployment option ships (Sơn Lộc WMS Cloud SaaS)
 - A user requests HTTPS-only enforcement
 - Public deployments outside LANs become a supported use case
 

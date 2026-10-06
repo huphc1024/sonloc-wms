@@ -1,4 +1,4 @@
-# Sentry WMS — Architecture Patterns
+# Sơn Lộc WMS — Architecture Patterns
 
 Catalog of mandatory patterns for hybrid 3PL + ecommerce operations.
 Every new feature must follow these rules so floor, admin, billing, and

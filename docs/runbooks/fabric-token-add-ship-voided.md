@@ -2,7 +2,7 @@
 
 Audience: operators rolling out the v1.9 dockd integration.
 
-Scope: a one-time admin-side token update so the Fabric polling consumer receives `ship.voided/1` events from the outbox. Without this update, voids accumulate in `integration_events` and Fabric's downstream inventory reconciliation drifts silently from Sentry's truth.
+Scope: a one-time admin-side token update so the Fabric polling consumer receives `ship.voided/1` events from the outbox. Without this update, voids accumulate in `integration_events` and Fabric's downstream inventory reconciliation drifts silently from Sơn Lộc WMS's truth.
 
 ## Why this matters
 
@@ -10,7 +10,7 @@ v1.9 adds the dockd `POST /api/v1/dockd/orders/<so>/void-ship` route. Every succ
 
 The polling endpoint (`GET /api/v1/events`) filters events by the caller token's `event_types` array. A token without `ship.voided` in its scope sees the rows persist on the database side but never receives them at the wire. The token is the gate, not the schema registry.
 
-Sentry registers `ship.voided` in `V150_CATALOG` at v1.9.0 boot. That makes it issuable on new tokens and visible in the admin UI's checkbox group. **Existing tokens are not auto-updated**; the operator has to add the new event_type explicitly.
+Sơn Lộc WMS registers `ship.voided` in `V150_CATALOG` at v1.9.0 boot. That makes it issuable on new tokens and visible in the admin UI's checkbox group. **Existing tokens are not auto-updated**; the operator has to add the new event_type explicitly.
 
 ## When to do this
 
@@ -54,7 +54,7 @@ After the scope update lands, drive a test void through dockd and watch for the 
 
 ```bash
 # 1. From dockd, void any SHIPPED test order.
-# 2. From your monitoring host, poll Sentry as Fabric:
+# 2. From your monitoring host, poll Sơn Lộc WMS as Fabric:
 curl -H "X-WMS-Token: $FABRIC_TOKEN" \
      "https://sentry.avidmax.com/api/v1/events?after=$LAST_CURSOR"
 ```

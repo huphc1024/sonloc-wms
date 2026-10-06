@@ -8,7 +8,7 @@ Scope: how to read the DLQ viewer, the replay-one vs replay-batch decision tree,
 
 Every webhook delivery has up to eight attempts. After the eighth failure, the dispatcher flips the row's status to `dlq` (no ninth row is inserted; the eighth is mutated in place) and advances the subscription's cursor. The DLQ row stays in `webhook_deliveries` for 90 days (the cleanup beat from #194 reaps terminal rows on the daily sweep) and is visible in the per-subscription DLQ viewer at admin panel `/webhooks` → per-row `DLQ` action.
 
-A DLQ row is the recoverable failure surface. Sentry retried up to its documented schedule and gave up; the operator decides whether to drop the event, fix the consumer and replay, or replay-batch the rest of the affected window.
+A DLQ row is the recoverable failure surface. Sơn Lộc WMS retried up to its documented schedule and gave up; the operator decides whether to drop the event, fix the consumer and replay, or replay-batch the rest of the affected window.
 
 ## When to triage
 
@@ -16,7 +16,7 @@ The DLQ ceiling (default 1,000) auto-pauses the subscription with `pause_reason=
 
 - The DLQ count for a subscription climbs past ~10 in a sustained way. One-off DLQ rows are noise; sustained climb is signal.
 - The subscription auto-paused (visible as a `paused` status badge with `pause_reason=dlq_ceiling` on the `/webhooks` list).
-- A consumer reports they saw a fix go in but Sentry is not retrying old failures (correct: Sentry does not auto-retry DLQ rows; replay is operator-initiated).
+- A consumer reports they saw a fix go in but Sơn Lộc WMS is not retrying old failures (correct: Sơn Lộc WMS does not auto-retry DLQ rows; replay is operator-initiated).
 - The cross-subscription error log at `/webhooks` → `View errors` shows a sudden shift in `error_kind` distribution (e.g. a wave of `tls` errors after a consumer cert rotation).
 
 ## Reading the DLQ viewer
@@ -85,7 +85,7 @@ When you open `/webhooks` and see a row badged `paused` with `pause_reason='dlq_
 
 Use the cross-subscription error log (`/webhooks` → `View errors`) when a single subscription's DLQ does not tell the full story:
 
-- **Multiple subscriptions, same `error_kind`, narrow time window** = something on the Sentry side. Likely candidates: dispatcher container restart with a misconfigured env var, network-level outage between Sentry and the public internet, Fernet key issue affecting `webhook_secrets` decrypt.
+- **Multiple subscriptions, same `error_kind`, narrow time window** = something on the Sơn Lộc WMS side. Likely candidates: dispatcher container restart with a misconfigured env var, network-level outage between Sơn Lộc WMS and the public internet, Fernet key issue affecting `webhook_secrets` decrypt.
 - **Multiple subscriptions, multiple `error_kind`, narrow time window** = also Sentry-side, probably a dispatcher restart with mixed environment.
 - **One subscription, one `error_kind`, sustained over hours** = consumer-side. Hand off to the consumer's owner.
 - **One subscription, multiple `error_kind`, sustained** = consumer's endpoint is unstable. Hand off and pause the subscription if the DLQ is climbing toward the ceiling.
