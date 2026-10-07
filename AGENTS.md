@@ -1,4 +1,4 @@
-# Sentry WMS Repository
+# Sơn Lộc WMS Repository
 
 ## Repository structure
 

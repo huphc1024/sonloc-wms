@@ -49,7 +49,7 @@ class ExampleConnector(BaseConnector):
             )
             response.raise_for_status()
             for order in response.json()["orders"]:
-                # Transform external order into Sentry WMS format
+                # Transform external order into Sơn Lộc WMS format
                 # Upsert sales_orders and sales_order_lines by external ID
                 pass
 
@@ -67,7 +67,7 @@ class ExampleConnector(BaseConnector):
 
         A real connector would:
         1. Fetch items modified after `since` from the external API
-        2. Map external fields to Sentry WMS fields (sku, item_name, upc, etc.)
+        2. Map external fields to Sơn Lộc WMS fields (sku, item_name, upc, etc.)
         3. Upsert into the items table by SKU
         4. Handle field mapping differences (e.g. "product_name" -> "item_name")
 
@@ -81,7 +81,7 @@ class ExampleConnector(BaseConnector):
 
         A real connector would:
         1. Fetch inventory adjustments or snapshots from the external API
-        2. Map external locations to Sentry WMS warehouses/bins
+        2. Map external locations to Sơn Lộc WMS warehouses/bins
         3. Update inventory quantities accordingly
 
         Not all systems support this -- some are order-only.

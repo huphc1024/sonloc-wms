@@ -1,7 +1,7 @@
 # ERP Integration
 
 Operator-facing reference for connecting an external ERP or commerce
-platform to Sentry WMS via the v1.7.0 inbound API. The full wire
+platform to Sơn Lộc WMS via the v1.7.0 inbound API. The full wire
 contract lives in the [API Reference](api-reference.md) and the
 [inbound OpenAPI](api/inbound-openapi.yaml); this page covers the
 integration mental model + the v1.8.0 mapping_overrides feature.
@@ -19,7 +19,7 @@ Three pieces of operator-managed configuration:
 
 2. **Mapping document** -- one YAML file per source ERP under
    `db/mappings/<source_system>.yaml`. Translates the ERP's payload
-   shape into Sentry's canonical model. The annotated template at
+   shape into Sơn Lộc WMS's canonical model. The annotated template at
    `db/mappings/example-template.yaml.template` is the starting
    point. Boot loads each file once; the canonical-column validator
    (#267) refuses startup if any `canonical:` field name doesn't
@@ -157,7 +157,7 @@ fields per line:
 
 - `item_id` -- the canonical item UUID. Use `cross_system_lookup`
   with `source_type: item` so the source-system SKU translates to
-  the canonical UUID. Items must already exist in Sentry +
+  the canonical UUID. Items must already exist in Sơn Lộc WMS +
   `cross_system_mappings` (via prior `/api/v1/inbound/items` POST
   or admin UI item create) for the lookup to resolve.
 - `quantity_ordered` -- positive integer.
@@ -166,7 +166,7 @@ fields per line:
 to honor the source's ordering. Other line columns
 (`quantity_received` for PO; `quantity_allocated` /
 `quantity_picked` / `quantity_packed` / `quantity_shipped` for SO)
-default to 0; downstream Sentry workflows update them.
+default to 0; downstream Sơn Lộc WMS workflows update them.
 
 ### Idempotency on re-POST
 
@@ -200,7 +200,7 @@ then retry the PO / SO.
 
 ## See also
 
-- [Annotated mapping template](https://github.com/hightower-systems/sentry-wms/blob/main/db/mappings/example-template.yaml.template)
+- Annotated mapping template: `db/mappings/example-template.yaml.template`
 - [Inbound OpenAPI](api/inbound-openapi.yaml)
 - [Mapping document JSON schema](api/mapping-document-schema.json)
 - [Connectors](connectors.md) -- when to write a pull-mode connector

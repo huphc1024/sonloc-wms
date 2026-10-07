@@ -1,12 +1,12 @@
 # Customer API
 
-Two ways a 3PL customer reaches its own data in Sentry. They share the
+Two ways a 3PL customer reaches its own data in Sơn Lộc WMS. They share the
 tenancy model and nothing else: separate credentials, separate
 middleware, separate routes.
 
 | | Customer portal API | Customer-bound WMS token |
 |---|---|---|
-| Audience | People, through the portal SPA (`sentry-wms/portal`) | The customer's own ERP / integration |
+| Audience | People, through the portal SPA (`portal/`) | The customer's own ERP / integration |
 | Credential | `customer_users` login → session cookie | `X-WMS-Token` with `wms_tokens.customer_id` set |
 | Surface | `/api/portal/*` | `/api/v1/inbound/*`, `/api/v1/snapshot/inventory` |
 | Provisioned at | Admin → **Portal accounts** | Admin → **API tokens** → *Customer binding* |

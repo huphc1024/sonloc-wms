@@ -1,12 +1,12 @@
 # Webhooks (v1.6.1)
 
-This is the consumer integration guide for the Outbound Push surface (introduced in v1.6.0; hardened in v1.6.1). If you are integrating an external system that wants to receive Sentry's `integration_events` as HTTPS POSTs instead of polling `/api/v1/events`, this document is the contract.
+This is the consumer integration guide for the Outbound Push surface (introduced in v1.6.0; hardened in v1.6.1). If you are integrating an external system that wants to receive Sơn Lộc WMS's `integration_events` as HTTPS POSTs instead of polling `/api/v1/events`, this document is the contract.
 
-The wire envelope is byte-for-byte identical to a single-event response from the polling endpoint, so a consumer that already polls Sentry can keep its event-handling code and add a webhook entry point that calls the same handler.
+The wire envelope is byte-for-byte identical to a single-event response from the polling endpoint, so a consumer that already polls Sơn Lộc WMS can keep its event-handling code and add a webhook entry point that calls the same handler.
 
 ## Overview
 
-A Sentry admin registers your endpoint as a webhook subscription via the admin panel. The dispatcher daemon then POSTs each visible event to the registered URL in commit order, signs every request with HMAC-SHA256 over a shared secret, retries failures on an exponential schedule (eight attempts, ~15 hours total), and dead-letters on the eighth failure. Your endpoint's job is to verify the signature, dedupe on `event_id`, and return a 2xx within the 10-second timeout.
+A Sơn Lộc WMS admin registers your endpoint as a webhook subscription via the admin panel. The dispatcher daemon then POSTs each visible event to the registered URL in commit order, signs every request with HMAC-SHA256 over a shared secret, retries failures on an exponential schedule (eight attempts, ~15 hours total), and dead-letters on the eighth failure. Your endpoint's job is to verify the signature, dedupe on `event_id`, and return a 2xx within the 10-second timeout.
 
 ## What a request looks like
 
@@ -32,7 +32,7 @@ The request body is a single-event JSON object identical to a polling response p
 |-------|------|-------------|
 | `event_id` | int64 | Server-side `BIGSERIAL` from `integration_events`. Monotonic in commit order via the v1.5 `visible_at` trigger. **This is the only safe dedupe key.** See [Dedupe contract](#dedupe-contract). |
 | `event_type` | string | One of the catalog values returned by `GET /api/v1/events/types` (`ship.confirmed`, `pick.confirmed`, `receipt.completed`, `inventoryadjusted.completed`, `cycle_count.adjusted`, `inventorytransfer.completed`, `pack.confirmed`, `salesorderedit.completed`, `return.received`). |
-| `event_version` | int | Schema version. The full JSON Schema is at `api/schemas_v1/events/<event_type>/<version>.json` in the Sentry repo and served at `GET /api/v1/events/schema/<type>/<version>` for runtime fetches. |
+| `event_version` | int | Schema version. The full JSON Schema is at `api/schemas_v1/events/<event_type>/<version>.json` in the Sơn Lộc WMS repo and served at `GET /api/v1/events/schema/<type>/<version>` for runtime fetches. |
 | `event_timestamp` | RFC 3339 string | When the warehouse operation that produced the event happened. Distinct from `X-Sentry-Timestamp`, which reflects dispatch (or replay) time. |
 | `aggregate_type` | string | The owning entity type (`sales_order`, `purchase_order`, `inventory`, `cycle_count`, `transfer`). |
 | `aggregate_id` | UUID string | The owning entity's `external_id`. Stable across the entity's lifetime; a consumer keying by aggregate gets per-aggregate FIFO across events. |
@@ -68,7 +68,7 @@ import time
 REPLAY_WINDOW_S = 300  # 5 minutes
 
 def verify_webhook(headers, raw_body, secret_for_generation):
-    """Returns True if the request is from Sentry, False otherwise.
+    """Returns True if the request is from Sơn Lộc WMS, False otherwise.
 
     headers: dict-like with the X-Sentry-* headers
     raw_body: bytes; pass the exact bytes that arrived on the wire
@@ -142,7 +142,7 @@ The `raw_body` argument MUST be the exact bytes the dispatcher sent. If your web
 
 `event_id` is a server-generated `BIGSERIAL` made monotonic in commit order by the `visible_at` trigger. Two deliveries of the same event always carry the same `event_id`; two different events always carry different `event_id`s.
 
-`source_txn_id` is set from the `X-Request-ID` header on the inbound HTTP request that produced the event. It is a Sentry-internal idempotency key for collapsing retries of the *same* request, exposed on the wire for distributed-tracing correlation. An authenticated caller inside the Sentry deployment can set it to an arbitrary UUID. A consumer that dedupes on `source_txn_id` alone trusts a value an attacker can steer; one legitimate caller with a deterministic `X-Request-ID` pattern is enough to poison downstream dedupe.
+`source_txn_id` is set from the `X-Request-ID` header on the inbound HTTP request that produced the event. It is a Sentry-internal idempotency key for collapsing retries of the *same* request, exposed on the wire for distributed-tracing correlation. An authenticated caller inside the Sơn Lộc WMS deployment can set it to an arbitrary UUID. A consumer that dedupes on `source_txn_id` alone trusts a value an attacker can steer; one legitimate caller with a deterministic `X-Request-ID` pattern is enough to poison downstream dedupe.
 
 `delivery_id` (the integer in `X-Sentry-Delivery-Id`) changes on every retry and on every replay, so deduping on it would process the same event multiple times.
 
@@ -160,7 +160,7 @@ The replay-protection window also bounds the value of a stolen webhook: an attac
 
 ## Latency characteristics
 
-Sentry's outbound dispatcher enforces a **2-second visibility floor** between when a warehouse operation commits and when its event becomes eligible for dispatch. The floor is inherited from the v1.5 cursor semantics that the polling endpoint also depends on; it absorbs the deferred-trigger / commit-order skew between the moment `visible_at` is set on an `integration_events` row and the moment a separate session can read that row in commit order. Without the floor, a poll or dispatch could observe an event whose `event_id` is greater than a not-yet-visible neighbor and advance the cursor past a hole; the floor closes that race at the cost of a fixed delay.
+Sơn Lộc WMS's outbound dispatcher enforces a **2-second visibility floor** between when a warehouse operation commits and when its event becomes eligible for dispatch. The floor is inherited from the v1.5 cursor semantics that the polling endpoint also depends on; it absorbs the deferred-trigger / commit-order skew between the moment `visible_at` is set on an `integration_events` row and the moment a separate session can read that row in commit order. Without the floor, a poll or dispatch could observe an event whose `event_id` is greater than a not-yet-visible neighbor and advance the cursor past a hole; the floor closes that race at the cost of a fixed delay.
 
 What this means for the consumer:
 
@@ -198,7 +198,7 @@ The shared secret has two generation slots: `1` (primary, what the dispatcher si
 
 1. The current generation 1 is demoted to generation 2 with `expires_at = NOW() + 24h`.
 2. A new plaintext is issued at generation 1; the dispatcher uses it on every subsequent dispatch.
-3. The plaintext is shown to the admin exactly once; Sentry stores only the encrypted form.
+3. The plaintext is shown to the admin exactly once; Sơn Lộc WMS stores only the encrypted form.
 
 During the 24-hour window, the dispatcher signs every request with generation 1 but the consumer must accept either. After 24 hours, generation 2 is no longer valid (the dispatcher's gen=2 row is reaped by the cleanup beat).
 
@@ -231,7 +231,7 @@ The shared secret bytes are sensitive. Treat them as you would any HMAC key: kee
 - Let it sit in process state that might be pickled (Python `pickle`, `joblib`, `multiprocessing`'s default IPC), swapped to disk, captured in an APM error report (`Sentry.io`'s SDK with `capture_locals=True`, Datadog/New Relic equivalents), or read out of a debugger snapshot.
 - Cache it in a long-lived dict that gets serialized for warm-restart hydration. Reload from the secret manager on each process boot.
 
-A leaked secret means an attacker who reaches your webhook endpoint can forge signed deliveries indistinguishable from Sentry's until you rotate. Rotate via the Sentry admin panel and update your secret store within the 24-hour dual-accept window. Sentry's server side mirrors this contract: the dispatcher's `SecretMaterial` wrapper refuses `repr` / `str` / `pickle` so the plaintext cannot escape via the analogous server-side leak surfaces.
+A leaked secret means an attacker who reaches your webhook endpoint can forge signed deliveries indistinguishable from Sơn Lộc WMS's until you rotate. Rotate via the Sơn Lộc WMS admin panel and update your secret store within the 24-hour dual-accept window. Sơn Lộc WMS's server side mirrors this contract: the dispatcher's `SecretMaterial` wrapper refuses `repr` / `str` / `pickle` so the plaintext cannot escape via the analogous server-side leak surfaces.
 
 ## Subscription pause + DLQ behavior
 
@@ -242,7 +242,7 @@ Two ceilings auto-pause the subscription:
 
 A paused subscription does not retry, does not advance the cursor, and does not publish new deliveries. The admin resumes via the admin panel after triaging the DLQ; resume publishes a `resumed` event on the cross-worker pubsub channel and the dispatcher picks up where it stopped.
 
-Your endpoint can detect a long pause by watching for a gap in `event_id`s after a sustained outage. Sentry will not silently drop events: the dispatcher's cursor stays at the last terminal delivery until you triage and resume.
+Your endpoint can detect a long pause by watching for a gap in `event_id`s after a sustained outage. Sơn Lộc WMS will not silently drop events: the dispatcher's cursor stays at the last terminal delivery until you triage and resume.
 
 ## Ceiling changes do not auto-resume
 
@@ -254,13 +254,13 @@ When the admin edits the subscription's `subscription_filter` (event_types, ware
 
 ## Idempotency expectations
 
-Sentry's contract is at-least-once delivery. Your endpoint MUST be idempotent on `event_id`. The retry schedule alone produces duplicates: if your endpoint accepts the request, applies the side effect, and then crashes before returning a 2xx, the dispatcher will retry. A 12-hour gap between attempt 8 and the DLQ also means a replay-batch hours later can produce a "delayed duplicate" your endpoint must absorb.
+Sơn Lộc WMS's contract is at-least-once delivery. Your endpoint MUST be idempotent on `event_id`. The retry schedule alone produces duplicates: if your endpoint accepts the request, applies the side effect, and then crashes before returning a 2xx, the dispatcher will retry. A 12-hour gap between attempt 8 and the DLQ also means a replay-batch hours later can produce a "delayed duplicate" your endpoint must absorb.
 
 ## Error contract from your perspective
 
-If your endpoint returns a 4xx or 5xx, or fails the network call, the dispatcher classifies the failure into one of seven `error_kind` values: `timeout`, `connection`, `tls`, `4xx`, `5xx`, `ssrf_rejected`, `unknown`. Sentry stores ONLY the categorical kind plus the HTTP status code; your response body is never persisted. This is intentional: a misconfigured consumer endpoint can echo upstream credentials (database connection strings, API tokens) into a 5xx page, and Sentry refuses to act as a persistence channel for the consumer's secrets.
+If your endpoint returns a 4xx or 5xx, or fails the network call, the dispatcher classifies the failure into one of seven `error_kind` values: `timeout`, `connection`, `tls`, `4xx`, `5xx`, `ssrf_rejected`, `unknown`. Sơn Lộc WMS stores ONLY the categorical kind plus the HTTP status code; your response body is never persisted. This is intentional: a misconfigured consumer endpoint can echo upstream credentials (database connection strings, API tokens) into a 5xx page, and Sơn Lộc WMS refuses to act as a persistence channel for the consumer's secrets.
 
-If the Sentry admin needs to debug a delivery failure, they will see the categorical short message and triage hint from the server-owned error catalog. Specifics about why your endpoint failed live in your endpoint's logs.
+If the Sơn Lộc WMS admin needs to debug a delivery failure, they will see the categorical short message and triage hint from the server-owned error catalog. Specifics about why your endpoint failed live in your endpoint's logs.
 
 ## Response body size
 

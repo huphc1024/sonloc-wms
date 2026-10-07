@@ -52,7 +52,7 @@ Revisit when:
 Status: Accepted risk (v1.4)
 Severity: High (as flagged by audit)
 
-Sentry WMS is deployed on warehouse LANs where HTTPS certificates are
+Sơn Lộc WMS is deployed on warehouse LANs where HTTPS certificates are
 impractical. Clone-and-run users and LAN-only production deployments both
 require cleartext HTTP. Profile-gated enforcement was attempted in v1.1 and
 reverted in v1.1.1 because it broke real deployments.
@@ -62,7 +62,7 @@ cleartext to RFC1918 ranges) is the most likely future mitigation if this
 needs to change.
 
 Revisit when:
-- A hosted/cloud deployment option ships (Sentry Cloud SaaS)
+- A hosted/cloud deployment option ships (Sơn Lộc WMS Cloud SaaS)
 - A user requests HTTPS-only enforcement
 - Public deployments outside LANs become a supported use case
 

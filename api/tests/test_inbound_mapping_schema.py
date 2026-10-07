@@ -42,7 +42,7 @@ class TestMappingSchemaEndpoint:
         resp = client.get("/api/v1/inbound/mapping-schema")
         body = resp.get_json()
         assert body["$schema"] == "https://json-schema.org/draft/2020-12/schema"
-        assert body["title"] == "SentryWMS Inbound Mapping Document"
+        assert body["title"] == "Sơn Lộc WMS Inbound Mapping Document"
         # check_schema raises on a malformed schema. Validates the meta-shape.
         Draft202012Validator.check_schema(body)
 

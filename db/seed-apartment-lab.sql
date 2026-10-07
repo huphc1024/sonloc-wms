@@ -1,5 +1,5 @@
 -- ============================================================
--- SENTRY WMS - Dữ liệu demo Phòng Thử Nghiệm
+-- SƠN LỘC WMS - Dữ liệu demo Phòng Thử Nghiệm
 -- ============================================================
 -- Khớp với 61 nhãn mã vạch Zebra in sẵn.
 -- Cross-referenced against HANDOFF-SESSION5-CLEAN-SLATE.md

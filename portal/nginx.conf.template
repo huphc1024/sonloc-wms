@@ -1,4 +1,4 @@
-# Nginx server block for the Sentry WMS customer-portal SPA.
+# Nginx server block for the Sơn Lộc WMS customer-portal SPA.
 #
 # Templated form: nginx 1.27 alpine's /docker-entrypoint.d/20-envsubst-on-templates.sh
 # substitutes ${API_UPSTREAM_URL} and ${API_UPSTREAM_HOST} (and any other ${VAR})

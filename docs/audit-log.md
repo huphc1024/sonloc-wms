@@ -157,7 +157,7 @@ SO for `POS_CHECKOUT`, the freshly-created credit-memo SO for
 `POS_REFUND`. `user_id` is the wire-level `cashier_id` from the
 request body (the POS Service's own user-table id; never FK'd to
 `users` -- POS sales attribute to a cashier identity that lives
-outside Sentry). `warehouse_id` is the SO header warehouse.
+outside Sơn Lộc WMS). `warehouse_id` is the SO header warehouse.
 
 `details` JSONB shape per row:
 

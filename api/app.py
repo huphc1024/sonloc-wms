@@ -1,5 +1,5 @@
 """
-Sentry WMS - Flask API Entry Point
+Sơn Lộc WMS - Flask API Entry Point
 """
 
 import logging

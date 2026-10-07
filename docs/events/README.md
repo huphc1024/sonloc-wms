@@ -31,7 +31,7 @@ It is exposed on the wire for distributed-tracing convenience, but
 any authenticated caller can set it to an arbitrary UUID by
 sending `X-Request-ID: <uuid>`. A consumer that dedupes on
 `source_txn_id` alone is trusting a value an attacker inside the
-Sentry deployment can steer; one legitimate caller with a
+Sơn Lộc WMS deployment can steer; one legitimate caller with a
 deterministic X-Request-ID pattern is enough to poison downstream
 dedupe for future events on the same aggregate.
 
@@ -40,7 +40,7 @@ is strictly greater than the last `event_id` successfully applied.
 Use `source_txn_id` only for correlation / tracing, never for
 "have I seen this before" checks.
 
-Per Sentry's polling contract, `event_id` is server-generated
+Per Sơn Lộc WMS's polling contract, `event_id` is server-generated
 `BIGSERIAL` and the outbox's deferred `visible_at` trigger keeps
 readers ordering on `(visible_at, event_id)` in commit order even
 when BIGSERIAL allocates event_ids out of commit order. Dedupe on

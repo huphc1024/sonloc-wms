@@ -61,7 +61,7 @@ Tell the consumer:
 - Approximate clock time of the rotation.
 - The 24-hour deadline by which their secret store must hold both old and new generations.
 
-The consumer should be ready to receive the new plaintext and write it to their secret store before you click rotate. Sentry shows the plaintext exactly once; if you click rotate and the consumer is not ready, you have to rotate again to issue another plaintext, and any second rotation within 24 hours overwrites the demoted secret and shortens the cutover.
+The consumer should be ready to receive the new plaintext and write it to their secret store before you click rotate. Sơn Lộc WMS shows the plaintext exactly once; if you click rotate and the consumer is not ready, you have to rotate again to issue another plaintext, and any second rotation within 24 hours overwrites the demoted secret and shortens the cutover.
 
 ### 3. Click rotate
 

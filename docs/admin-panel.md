@@ -275,7 +275,7 @@ internals and how to add your own.
 
 <!-- TODO: Add screenshot -->
 
-Manage `X-WMS-Token` credentials used by external systems to call Sentry's polling, snapshot, webhook, and inbound APIs.
+Manage `X-WMS-Token` credentials used by external systems to call Sơn Lộc WMS's polling, snapshot, webhook, and inbound APIs.
 
 - **List tokens** - token name, status (active / revoked), scope summary, customer binding (or *Operator*), last-used timestamp, expiration
 - **Create token** opens an issuance modal:
@@ -295,7 +295,7 @@ Manage `X-WMS-Token` credentials used by external systems to call Sentry's polli
 - **Delete** - hard delete after confirmation; preserved as forensic audit row in `wms_tokens_audit` (V-157 / #157 forensic trail).
 - **audit_log** writes on every issuance / rotate / revoke / delete (V-208 / #141).
 
-Cross-direction scope rule: a token's outbound and inbound surfaces are independent; an inbound-only token cannot reach the polling endpoints and vice versa. Cross-direction misuse returns 401 `cross_direction_scope_violation`. A customer-bound token adds a tenant dimension on top of that: surfaces with no owning-customer column return 403 `customer_scope_unsupported_surface`, and a write naming another customer returns 403 `customer_scope_violation`. See [SECURITY.md](https://github.com/hightower-systems/sentry-wms/blob/main/SECURITY.md) for the full scope-enforcement matrix.
+Cross-direction scope rule: a token's outbound and inbound surfaces are independent; an inbound-only token cannot reach the polling endpoints and vice versa. Cross-direction misuse returns 401 `cross_direction_scope_violation`. A customer-bound token adds a tenant dimension on top of that: surfaces with no owning-customer column return 403 `customer_scope_unsupported_surface`, and a write naming another customer returns 403 `customer_scope_violation`. See SECURITY.md (`SECURITY.md`) for the full scope-enforcement matrix.
 
 ---
 
@@ -318,7 +318,7 @@ Manage outbound polling consumer state. Each consumer group is a named cursor ov
 
 <!-- TODO: Add screenshot -->
 
-Outbound push subscriptions: register an HTTPS consumer URL and Sentry POSTs each visible `integration_event` to it via the `sentry-dispatcher` daemon. Subscriptions deliver in commit order, sign every request with HMAC-SHA256, retry failures on an exponential schedule (8 attempts, ~15h cumulative, +/-10% jitter per slot since v1.6.1 #234), and dead-letter on the eighth failure.
+Outbound push subscriptions: register an HTTPS consumer URL and Sơn Lộc WMS POSTs each visible `integration_event` to it via the `sentry-dispatcher` daemon. Subscriptions deliver in commit order, sign every request with HMAC-SHA256, retry failures on an exponential schedule (8 attempts, ~15h cumulative, +/-10% jitter per slot since v1.6.1 #234), and dead-letter on the eighth failure.
 
 - **List subscriptions** - URL, status (active / paused / revoked), last-24h success rate, current pending count, current DLQ count
 - **Create wizard**:

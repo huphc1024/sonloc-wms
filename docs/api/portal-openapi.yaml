@@ -1,10 +1,10 @@
 openapi: 3.1.0
 info:
-  title: Sentry WMS Customer Portal API
+  title: Sơn Lộc WMS Customer Portal API
   version: "1.30.0"
   description: >
     Session-authenticated API behind the customer portal SPA
-    (sentry-wms/portal). Every route is confined to the calling
+    (portal/). Every route is confined to the calling
     customer's own data in SQL, and every response withholds the
     operator's internal layout (bin, zone, pick location) by design.
 

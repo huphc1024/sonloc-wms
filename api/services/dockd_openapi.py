@@ -407,7 +407,7 @@ def build_dockd_openapi() -> Dict[str, Any]:
     return {
         "openapi": "3.1.0",
         "info": {
-            "title": "SentryWMS v1.9.0 Dockd",
+            "title": "Sơn Lộc WMS v1.9.0 Dockd",
             "version": "1.9.0",
             "description": (
                 "Per-station shipping API for the dockd integration. "

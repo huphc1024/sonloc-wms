@@ -1,21 +1,21 @@
 # Connector Framework
 
 The connector framework (new in v1.3.0) is the integration layer between
-Sentry and external systems of record -- ERPs like NetSuite or
+Sơn Lộc WMS and external systems of record -- ERPs like NetSuite or
 QuickBooks, commerce platforms like Shopify or BigCommerce, or any
-service with an HTTP API. Sentry does not ship first-party connectors
+service with an HTTP API. Sơn Lộc WMS does not ship first-party connectors
 for those systems yet (planned for v2.0.0); v1.3 delivers the
 scaffolding you write one against.
 
 > **v1.7.0 alternative.** Source systems can also push canonical-shaped
-> resource updates directly to Sentry via the [inbound API](api-reference.md)
+> resource updates directly to Sơn Lộc WMS via the [inbound API](api-reference.md)
 > at `/api/v1/inbound/*` without writing a connector. The inbound API is
 > the right shape when the source system can emit per-resource events on
 > its own schedule (push) and the canonical-side translation can be
 > expressed in a YAML mapping document. The connector framework remains
-> the right shape when Sentry has to pull on a schedule, when the
+> the right shape when Sơn Lộc WMS has to pull on a schedule, when the
 > integration needs background tasks, or when polling state has to live
-> in Sentry. Both surfaces share the X-WMS-Token auth model. See
+> in Sơn Lộc WMS. Both surfaces share the X-WMS-Token auth model. See
 > [Deployment -- Inbound (v1.7.0)](deployment.md) for the operator setup.
 
 ## What the framework provides
@@ -199,7 +199,7 @@ UPDATE sync_state
 resolves to a private address. If your ERP is on a local network,
 you need to proxy it through a public (or VPN-reachable public) URL.
 The guard is deliberately strict; see
-[SECURITY_BACKLOG.md](https://github.com/hightower-systems/sentry-wms/blob/main/SECURITY_BACKLOG.md) for the rationale.
+`SECURITY_BACKLOG.md` (repo root) for the rationale.
 
 **`CircuitOpenError`.** The connector has hit 5 consecutive failures;
 calls will fail fast for 5 minutes. Check `sync_state.last_error_message`

@@ -1,4 +1,4 @@
-# gitleaks configuration for sentry-wms.
+# gitleaks configuration for sonloc-wms.
 #
 # Extends the gitleaks default ruleset and allowlists ONLY the known-benign
 # placeholder secrets that the default rules flag in the test suite and CI.
@@ -14,7 +14,7 @@
 # default ruleset does not flag them (the former is in gitleaks' own
 # built-in allowlist), so adding them would be dead config.
 
-title = "sentry-wms gitleaks config"
+title = "sonloc-wms gitleaks config"
 
 [extend]
 useDefault = true
